@@ -142,6 +142,7 @@ class GildedRoseTest {
 
         assertEquals(22, item.quality);
     }
+
     @Test
     void backstage_passes_quality_increase_2_when_6_days_or_less() {
         Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 6, 46);
@@ -158,7 +159,6 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(49, item.quality);
     }
-
 
 
     @Test
@@ -188,5 +188,25 @@ class GildedRoseTest {
         assertEquals(50, item.quality);
     }
 
+    @Test
+    void conjured_quality_should_dropsX2() {
 
+        Item item = new Item("Conjured Mana Cake", 10, 5);
+        GildedRose app = new GildedRose(new Item[]{item});
+
+        app.updateQuality();
+
+        assertEquals(3, item.quality);
+        assertEquals(9, item.sellIn);
+    }
+
+    @Test
+    void conjured_quality_never_negative(){
+        Item item = new Item("Conjured Mana Cake", 0, 1);
+        GildedRose app = new GildedRose(new Item[]{item});
+
+        app.updateQuality();
+
+        assertEquals(0, item.quality);
+    }
 }
